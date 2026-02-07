@@ -1,0 +1,34 @@
+# Compiled files
+*.o
+*.ppu
+*.compiled
+*.a
+*.so
+*.dylib
+*.dll
+
+# Executable
+mechs
+mechs_original
+src/mechs
+
+# Lazarus session files
+*.lps
+
+# Output directories
+lib/
+backup/
+
+# IDE files
+*.layout
+*.bak
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Session state
+*.session
+
+# Copilot instructions (local only)
+.github/copilot-instructions.md

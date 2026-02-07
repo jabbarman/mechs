@@ -1,0 +1,34 @@
+{
+  "id": "example-chapter",
+  "title": "Example Chapter Title",
+  "author": "Your Name",
+  "description": "Brief description of what this chapter covers",
+  "difficulty": 1,
+  "sections": [
+    {
+      "type": "introduction",
+      "text": "This is the introduction to your chapter.\nIt can span multiple lines.\nUse it to give an overview of the topic."
+    },
+    {
+      "type": "text",
+      "text": "This is a text section where you present information.\n\nYou can include:\n  - Lists\n  - Explanations\n  - Formulas (use ASCII: x^2 not x²)\n  - Examples\n\nNote: Use ASCII characters only. Use ^ for powers (m/s^2), x for multiply."
+    },
+    {
+      "type": "question",
+      "text": "Here is your question?\n(You can provide hints or context here)"
+    },
+    {
+      "type": "answer",
+      "text": "expected answer"
+    },
+    {
+      "type": "reinforcement",
+      "text": "This feedback is shown after the student answers.\nUse it to reinforce learning, provide explanation,\nor give additional context about the answer."
+    },
+    {
+      "type": "text",
+      "text": "Continue with more content..."
+    }
+  ]
+}
+

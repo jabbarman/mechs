@@ -1,0 +1,61 @@
+{
+  "id": "mechanics-01-gravity",
+  "title": "Force of Gravity, Weight and Friction",
+  "author": "S J Jabbar (Modernized)",
+  "description": "Introduction to gravitational force, weight, and frictional forces",
+  "difficulty": 1,
+  "sections": [
+    {
+      "type": "introduction",
+      "text": "This chapter introduces the fundamental concepts of gravitational force,\nweight, and friction. These are essential building blocks for understanding\nmechanics and motion."
+    },
+    {
+      "type": "text",
+      "text": "GRAVITY:\n\nGravity is a force that attracts all objects with mass toward each other.\nOn Earth, this force pulls objects toward the center of the planet.\n\nThe acceleration due to gravity on Earth is approximately 9.8 m/s^2."
+    },
+    {
+      "type": "question",
+      "text": "What is the approximate acceleration due to gravity on Earth in m/s^2?"
+    },
+    {
+      "type": "answer",
+      "text": "9.8"
+    },
+    {
+      "type": "reinforcement",
+      "text": "Correct! The acceleration due to gravity is approximately 9.8 m/s^2.\nThis means that in the absence of air resistance, all objects near\nEarth's surface accelerate downward at this rate."
+    },
+    {
+      "type": "text",
+      "text": "WEIGHT:\n\nWeight is the force exerted on an object due to gravity.\nIt is calculated as: Weight = mass x gravitational acceleration\n\nWeight is measured in Newtons (N), where 1 N = 1 kg*m/s^2"
+    },
+    {
+      "type": "question",
+      "text": "If an object has a mass of 10 kg, what is its weight on Earth?\n(Use g = 10 m/s^2 for simplicity, answer in Newtons)"
+    },
+    {
+      "type": "answer",
+      "text": "100"
+    },
+    {
+      "type": "reinforcement",
+      "text": "Excellent! Weight = mass x g = 10 kg x 10 m/s^2 = 100 N.\nRemember that weight is a force, so it's measured in Newtons."
+    },
+    {
+      "type": "text",
+      "text": "FRICTION:\n\nFriction is a force that opposes motion between two surfaces in contact.\nThere are two main types:\n  1. Static friction - prevents motion from starting\n  2. Kinetic friction - opposes motion that is already occurring\n\nFriction depends on the nature of the surfaces and the normal force."
+    },
+    {
+      "type": "question",
+      "text": "Does friction oppose or assist motion?"
+    },
+    {
+      "type": "answer",
+      "text": "oppose"
+    },
+    {
+      "type": "reinforcement",
+      "text": "That's right! Friction opposes motion. However, friction is not always\nunwanted - it's what allows us to walk, and vehicles to grip the road!"
+    }
+  ]
+}
