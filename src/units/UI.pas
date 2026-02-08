@@ -15,6 +15,7 @@ procedure DisplayContinuePrompt;
 function GetMenuChoice(MaxChoice: integer): integer;
 function GetYesNo(const Prompt: string): boolean;
 procedure DisplayText(const Text: string; StartY: TYCoord);
+function CountDisplayLines(const Text: string): integer;
 function GetAnswer(const Question: string): string;
 procedure DisplayReinforcement(const Text: string);
 
@@ -139,25 +140,97 @@ end;
 procedure DisplayText(const Text: string; StartY: TYCoord);
 var
   Lines: TStringList;
-  i: integer;
+  i, j: integer;
   CurrentY: TYCoord;
+  Line: string;
+  WrappedLines: TStringList;
+  MaxWidth: integer;
 begin
+  MaxWidth := 70; { Maximum line width for content area }
   Lines := TStringList.Create;
+  WrappedLines := TStringList.Create;
   try
     Lines.Text := Text;
-    CurrentY := StartY;
     
+    { Wrap each line to MaxWidth }
     for i := 0 to Lines.Count - 1 do
+    begin
+      Line := Lines[i];
+      while Length(Line) > MaxWidth do
+      begin
+        { Find last space before MaxWidth }
+        j := MaxWidth;
+        while (j > 0) and (Line[j] <> ' ') do
+          Dec(j);
+        
+        if j = 0 then
+          j := MaxWidth; { No space found, break at MaxWidth }
+        
+        WrappedLines.Add(Copy(Line, 1, j));
+        Delete(Line, 1, j);
+        Line := TrimLeft(Line); { Remove leading spaces from remainder }
+      end;
+      if Length(Line) > 0 then
+        WrappedLines.Add(Line);
+    end;
+    
+    CurrentY := StartY;
+    for i := 0 to WrappedLines.Count - 1 do
     begin
       if CurrentY > 20 then
         Break;
       GotoXY(5, CurrentY);
-      Write(Lines[i]);
+      Write(WrappedLines[i]);
       Inc(CurrentY);
     end;
   finally
     Lines.Free;
+    WrappedLines.Free;
   end;
+end;
+
+{ Returns how many lines the text will occupy when displayed }
+function CountDisplayLines(const Text: string): integer;
+var
+  Lines: TStringList;
+  i, j: integer;
+  Line: string;
+  MaxWidth: integer;
+  Count: integer;
+begin
+  MaxWidth := 70;
+  Count := 0;
+  Lines := TStringList.Create;
+  try
+    Lines.Text := Text;
+    
+    for i := 0 to Lines.Count - 1 do
+    begin
+      Line := Lines[i];
+      if Length(Line) = 0 then
+      begin
+        Inc(Count);
+        Continue;
+      end;
+      
+      while Length(Line) > MaxWidth do
+      begin
+        j := MaxWidth;
+        while (j > 0) and (Line[j] <> ' ') do
+          Dec(j);
+        if j = 0 then
+          j := MaxWidth;
+        Inc(Count);
+        Delete(Line, 1, j);
+        Line := TrimLeft(Line);
+      end;
+      if Length(Line) > 0 then
+        Inc(Count);
+    end;
+  finally
+    Lines.Free;
+  end;
+  Result := Count;
 end;
 
 function GetAnswer(const Question: string): string;

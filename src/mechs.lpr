@@ -40,16 +40,19 @@ begin
     case Section.ContentType of
       ctIntroduction, ctText:
       begin
-        DisplayText(Section.Text, CurrentY);
-        Inc(CurrentY, 3);
-        if CurrentY > 18 then
+        { Check if there's enough space for this text section }
+        if CurrentY + CountDisplayLines(Section.Text) > 18 then
         begin
+          { Not enough space, show continue prompt and clear screen }
           DisplayContinuePrompt;
           ClearScreen;
           SplitScreen2;
           DisplayHeader(Chapter.Metadata.Title);
           CurrentY := 5;
         end;
+        
+        DisplayText(Section.Text, CurrentY);
+        CurrentY := CurrentY + CountDisplayLines(Section.Text) + 1;
       end;
       
       ctQuestion:
@@ -92,7 +95,8 @@ begin
                (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
             begin
               Inc(SectionIndex);
-              DisplayReinforcement(Chapter.Sections[SectionIndex].Text);
+              { Add "Excellent!" prefix to reinforcement for correct answers }
+              DisplayReinforcement('Excellent!'#10#10 + Chapter.Sections[SectionIndex].Text);
               CurrentY := 5;
               ClearScreen;
               SplitScreen2;
