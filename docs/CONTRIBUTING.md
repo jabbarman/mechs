@@ -149,11 +149,11 @@ and validate selection.
 }
 ```
 
-**Question/Answer:**
+**Free-Text Question:**
 ```json
 {
   "type": "question",
-  "text": "Your question here?"
+  "text": "Your question here?\n(Students type their answer)"
 },
 {
   "type": "answer",
@@ -161,7 +161,29 @@ and validate selection.
 },
 {
   "type": "reinforcement",
-  "text": "Feedback explaining the answer"
+  "text": "Feedback shown only for correct answers"
+}
+```
+
+**Multiple-Choice Question:**
+```json
+{
+  "type": "question",
+  "question_type": "multiple-choice",
+  "text": "Which of the following is correct?",
+  "choices": [
+    "A. First option",
+    "B. Second option (correct)",
+    "C. Third option"
+  ]
+},
+{
+  "type": "answer",
+  "text": "B"
+},
+{
+  "type": "reinforcement",
+  "text": "Explanation of why B is correct (shown only for correct answers)"
 }
 ```
 
@@ -169,9 +191,12 @@ and validate selection.
 
 - Questions should immediately follow relevant text sections
 - Every question must have an answer section
-- Reinforcement is optional but highly recommended
+- Reinforcement is shown ONLY for correct answers
+- For multiple-choice: answer should be single letter (A, B, C, etc.)
+- For free-text: answer comparison is case-insensitive with trimmed whitespace
 - Keep text sections under 15 lines for readability
 - Use clear, unambiguous language
+- Use ASCII only (m/s^2 not m/s², x not ×)
 - Test your chapter before submitting
 
 ## Questions?

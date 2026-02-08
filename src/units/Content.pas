@@ -18,11 +18,13 @@ var
   JSONData: TJSONData;
   JSONObject: TJSONObject;
   SectionsArray: TJSONArray;
-  i: integer;
+  i, j: integer;
   SectionObj: TJSONObject;
   FileContent: string;
   F: TextFile;
   Line: string;
+  QuestionTypeStr: string;
+  ChoicesArray: TJSONArray;
 begin
   AssignFile(F, FileName);
   Reset(F);
@@ -66,6 +68,24 @@ begin
         end;
         
         Result.Sections[i].Text := SectionObj.Get('text', '');
+        
+        { Parse question type (default to free-text for backward compatibility) }
+        QuestionTypeStr := SectionObj.Get('question_type', 'free-text');
+        if QuestionTypeStr = 'multiple-choice' then
+          Result.Sections[i].QuestionType := qtMultipleChoice
+        else
+          Result.Sections[i].QuestionType := qtFreeText;
+        
+        { Parse choices array if present }
+        ChoicesArray := SectionObj.Get('choices', TJSONArray(nil)) as TJSONArray;
+        if Assigned(ChoicesArray) then
+        begin
+          SetLength(Result.Sections[i].Choices, ChoicesArray.Count);
+          for j := 0 to ChoicesArray.Count - 1 do
+            Result.Sections[i].Choices[j] := ChoicesArray.Strings[j];
+        end
+        else
+          SetLength(Result.Sections[i].Choices, 0);
       end;
     end;
   finally

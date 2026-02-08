@@ -46,9 +46,10 @@ mechs is a modular, terminal-based Computer-Assisted Learning (CAL) system built
 
 **Key Types:**
 - `TChapter` - Complete chapter with metadata and sections
-- `TChapterSection` - Individual content section
+- `TChapterSection` - Individual content section (with question type and choices)
 - `TDiagnosticData` - Performance tracking data
-- `TContentType` - Enum for section types
+- `TContentType` - Enum for section types (text, question, answer, etc.)
+- `TQuestionType` - Enum for question types (free-text, multiple-choice)
 
 **Dependencies:** None (foundation unit)
 
@@ -225,10 +226,24 @@ JSON Files ──→ Content.LoadChapter() ──→ TChapter record
 
 ### Adding New Question Types
 
-1. Define new content type
-2. Extend TChapterSection with optional fields
-3. Implement rendering in UI.pas
-4. Update answer validation logic
+**IMPLEMENTED:** Multiple-choice questions are now supported!
+
+To add more question types:
+1. Add enum value to `TQuestionType` in MechsTypes.pas
+2. Extend TChapterSection with optional fields (like `Choices`)
+3. Update JSON parsing in Content.pas to handle new fields
+4. Implement rendering logic in mechs.lpr ProcessChapter procedure
+5. Add answer validation for new question type
+
+**Current Question Types:**
+- **Free-text** (`qtFreeText`) - Students type their answer
+  - Case-insensitive comparison with trimmed whitespace
+  - Good for numerical answers or short text responses
+  
+- **Multiple-choice** (`qtMultipleChoice`) - Students select A, B, C, etc.
+  - Choices displayed automatically from JSON array
+  - Single-letter answer validation
+  - Follows 1987 original format
 
 ### Adding New Analytics
 

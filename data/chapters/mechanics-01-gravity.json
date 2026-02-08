@@ -1,61 +1,115 @@
 {
   "id": "mechanics-01-gravity",
   "title": "Force of Gravity, Weight and Friction",
-  "author": "S J Jabbar (Modernized)",
+  "author": "S J Jabbar (1987)",
   "description": "Introduction to gravitational force, weight, and frictional forces",
   "difficulty": 1,
   "sections": [
     {
-      "type": "introduction",
-      "text": "This chapter introduces the fundamental concepts of gravitational force,\nweight, and friction. These are essential building blocks for understanding\nmechanics and motion."
+      "type": "text",
+      "text": "CHAPTER 01: FORCE OF GRAVITY, WEIGHT AND FRICTION\n\nGravitation is the force by which bodies are attracted towards each other. It is responsible for keeping the Moon in its orbit about the Earth and also the Earth and its fellow planets in their orbits round the Sun.\n\nIn circular motion, an object is kept in its path by a force directed towards the centre of the circle. Such forces are called centripetal forces. Gravitation provides the centripetal force which keeps the planets in orbit."
     },
     {
       "type": "text",
-      "text": "GRAVITY:\n\nGravity is a force that attracts all objects with mass toward each other.\nOn Earth, this force pulls objects toward the center of the planet.\n\nThe acceleration due to gravity on Earth is approximately 9.8 m/s^2."
-    },
-    {
-      "type": "question",
-      "text": "What is the approximate acceleration due to gravity on Earth in m/s^2?"
-    },
-    {
-      "type": "answer",
-      "text": "9.8"
-    },
-    {
-      "type": "reinforcement",
-      "text": "Correct! The acceleration due to gravity is approximately 9.8 m/s^2.\nThis means that in the absence of air resistance, all objects near\nEarth's surface accelerate downward at this rate."
+      "text": "Weight is the name given to the force due to gravity on a mass. It has been shown that on the Earth the force of gravity on a mass of one kilogram is approximately 9.8 newtons. Thus the weight of a one kilogram mass is approximately 9.8 N.\n\nThe weight of an object depends on the strength of the gravitational field in which it is placed. On the Moon, for example, the gravitational field is weaker than on the Earth, so the same mass has a smaller weight."
     },
     {
       "type": "text",
-      "text": "WEIGHT:\n\nWeight is the force exerted on an object due to gravity.\nIt is calculated as: Weight = mass x gravitational acceleration\n\nWeight is measured in Newtons (N), where 1 N = 1 kg*m/s^2"
-    },
-    {
-      "type": "question",
-      "text": "If an object has a mass of 10 kg, what is its weight on Earth?\n(Use g = 10 m/s^2 for simplicity, answer in Newtons)"
-    },
-    {
-      "type": "answer",
-      "text": "100"
-    },
-    {
-      "type": "reinforcement",
-      "text": "Excellent! Weight = mass x g = 10 kg x 10 m/s^2 = 100 N.\nRemember that weight is a force, so it's measured in Newtons."
+      "text": "When two surfaces are in contact and one tries to move over the other, a force called friction acts between them. Friction always acts in such a way as to oppose the motion or the attempted motion.\n\nThere are two main types of friction. Static friction acts when there is no relative motion between the surfaces. Dynamic (or kinetic) friction acts when the surfaces are moving relative to each other."
     },
     {
       "type": "text",
-      "text": "FRICTION:\n\nFriction is a force that opposes motion between two surfaces in contact.\nThere are two main types:\n  1. Static friction - prevents motion from starting\n  2. Kinetic friction - opposes motion that is already occurring\n\nFriction depends on the nature of the surfaces and the normal force."
+      "text": "Static friction can take any value up to a maximum, depending on the force trying to cause motion. Once this maximum value is exceeded, the object will begin to move and dynamic friction will act instead.\n\nFriction can be useful. For example, without friction it would not be possible to walk, to grip objects, or for a car to move or stop.\n\nFriction can also be a nuisance. It causes wear of moving parts and results in energy being wasted as heat. For this reason, friction is often reduced by lubrication or by using ball bearings."
     },
     {
       "type": "question",
-      "text": "Does friction oppose or assist motion?"
+      "question_type": "multiple-choice",
+      "text": "1. Which force is responsible for keeping the Moon in its orbit about the Earth?",
+      "choices": [
+        "A. Friction",
+        "B. Gravitation",
+        "C. Magnetism"
+      ]
     },
     {
       "type": "answer",
-      "text": "oppose"
+      "text": "B"
     },
     {
       "type": "reinforcement",
-      "text": "That's right! Friction opposes motion. However, friction is not always\nunwanted - it's what allows us to walk, and vehicles to grip the road!"
+      "text": "Gravitation is the force of attraction between masses. It provides the centripetal force necessary to keep the Moon in orbit around the Earth."
+    },
+    {
+      "type": "question",
+      "question_type": "multiple-choice",
+      "text": "2. What is the name given to the force due to gravity on a mass?",
+      "choices": [
+        "A. Pressure",
+        "B. Density",
+        "C. Weight"
+      ]
+    },
+    {
+      "type": "answer",
+      "text": "C"
+    },
+    {
+      "type": "reinforcement",
+      "text": "The force due to gravity acting on a mass is called its weight. Mass and weight are not the same: mass is the amount of matter, weight is the gravitational force on that mass."
+    },
+    {
+      "type": "question",
+      "question_type": "multiple-choice",
+      "text": "3. On the Moon, the weight of an object is smaller than on the Earth because:",
+      "choices": [
+        "A. The mass of the object changes",
+        "B. The gravitational field is weaker",
+        "C. There is no friction"
+      ]
+    },
+    {
+      "type": "answer",
+      "text": "B"
+    },
+    {
+      "type": "reinforcement",
+      "text": "The mass of an object does not change, but the strength of the gravitational field does. The Moon's gravitational field is weaker than the Earth's, so the same mass has less weight."
+    },
+    {
+      "type": "question",
+      "question_type": "multiple-choice",
+      "text": "4. Which type of friction acts when there is no relative motion between two surfaces?",
+      "choices": [
+        "A. Dynamic friction",
+        "B. Kinetic friction",
+        "C. Static friction"
+      ]
+    },
+    {
+      "type": "answer",
+      "text": "C"
+    },
+    {
+      "type": "reinforcement",
+      "text": "Static friction acts when there is no relative motion between two surfaces. It can increase up to a maximum value before motion begins."
+    },
+    {
+      "type": "question",
+      "question_type": "multiple-choice",
+      "text": "5. Friction is often reduced in machines because:",
+      "choices": [
+        "A. It increases efficiency",
+        "B. It causes wear and wastes energy",
+        "C. It increases speed"
+      ]
+    },
+    {
+      "type": "answer",
+      "text": "B"
+    },
+    {
+      "type": "reinforcement",
+      "text": "Friction causes wear of moving parts and wastes energy as heat. For this reason it is often reduced by lubrication or by using ball bearings."
     }
   ]
 }

@@ -15,10 +15,15 @@ type
   { Content types }
   TContentType = (ctText, ctQuestion, ctAnswer, ctReinforcement, ctIntroduction);
   
+  { Question types }
+  TQuestionType = (qtFreeText, qtMultipleChoice);
+  
   { Chapter section record }
   TChapterSection = record
     ContentType: TContentType;
     Text: string;
+    QuestionType: TQuestionType;
+    Choices: array of string;  // For multiple-choice questions
   end;
   
   { Chapter metadata }

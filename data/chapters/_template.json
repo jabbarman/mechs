@@ -15,7 +15,7 @@
     },
     {
       "type": "question",
-      "text": "Here is your question?\n(You can provide hints or context here)"
+      "text": "Here is a free-text question?\n(Students can type any answer)"
     },
     {
       "type": "answer",
@@ -23,7 +23,29 @@
     },
     {
       "type": "reinforcement",
-      "text": "This feedback is shown after the student answers.\nUse it to reinforce learning, provide explanation,\nor give additional context about the answer."
+      "text": "This feedback is shown ONLY if the student answers correctly.\nUse it to reinforce learning and provide explanation."
+    },
+    {
+      "type": "text",
+      "text": "You can also use multiple-choice questions..."
+    },
+    {
+      "type": "question",
+      "question_type": "multiple-choice",
+      "text": "Which of the following is correct?",
+      "choices": [
+        "A. First option",
+        "B. Second option (correct)",
+        "C. Third option"
+      ]
+    },
+    {
+      "type": "answer",
+      "text": "B"
+    },
+    {
+      "type": "reinforcement",
+      "text": "Correct! Explanation of why B is the right answer.\nThis is only shown for correct answers."
     },
     {
       "type": "text",

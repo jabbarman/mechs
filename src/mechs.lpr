@@ -21,6 +21,7 @@ var
   SectionIndex: integer;
   Section: TChapterSection;
   CurrentY: TYCoord;
+  i: integer;
 begin
   ClearScreen;
   SplitScreen2;
@@ -53,8 +54,23 @@ begin
       
       ctQuestion:
       begin
+        { Display question text }
         DisplayText(Section.Text, CurrentY);
         Inc(QuestionsAsked);
+        
+        { If multiple-choice, display choices }
+        if Section.QuestionType = qtMultipleChoice then
+        begin
+          Inc(CurrentY, 2);
+          for i := 0 to Length(Section.Choices) - 1 do
+          begin
+            GotoXY(5, CurrentY);
+            WriteLn(Section.Choices[i]);
+            Flush(Output);
+            Inc(CurrentY);
+          end;
+          Inc(CurrentY);
+        end;
         
         { Get next section which should be the answer }
         if (SectionIndex + 1 < Length(Chapter.Sections)) and 
@@ -66,7 +82,7 @@ begin
           { Move to answer section to compare (but don't display it) }
           Inc(SectionIndex);
           
-          { Simple answer checking - case insensitive trim }
+          { Answer checking - case insensitive trim }
           if Trim(LowerCase(Answer)) = Trim(LowerCase(Chapter.Sections[SectionIndex].Text)) then
           begin
             Inc(CorrectAnswers);
