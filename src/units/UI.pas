@@ -251,8 +251,11 @@ end;
 procedure DisplayReinforcement(const Text: string);
 var
   Lines: TStringList;
-  i: integer;
+  WrappedLines: TStringList;
+  i, j: integer;
   CurrentY: TYCoord;
+  Line: string;
+  MaxWidth: integer;
 begin
   { Clear content area (lines 5-20) and prompt area (lines 22-23) }
   for i := 5 to 20 do
@@ -266,25 +269,50 @@ begin
   Write(StringOfChar(' ', 80));
   Flush(Output);
   
-  { Display reinforcement text on lines 5-20 }
+  { Display reinforcement text on lines 5-20 with word wrapping }
+  MaxWidth := 70;
   Lines := TStringList.Create;
+  WrappedLines := TStringList.Create;
   try
     Lines.Text := Text;
-    CurrentY := 5;
     
-    SetColor(COLOR_GREEN);
+    { Wrap each line to MaxWidth }
     for i := 0 to Lines.Count - 1 do
+    begin
+      Line := Lines[i];
+      while Length(Line) > MaxWidth do
+      begin
+        { Find last space before MaxWidth }
+        j := MaxWidth;
+        while (j > 0) and (Line[j] <> ' ') do
+          Dec(j);
+        
+        if j = 0 then
+          j := MaxWidth; { No space found, break at MaxWidth }
+        
+        WrappedLines.Add(Copy(Line, 1, j));
+        Delete(Line, 1, j);
+        Line := TrimLeft(Line); { Remove leading spaces from remainder }
+      end;
+      if Length(Line) > 0 then
+        WrappedLines.Add(Line);
+    end;
+    
+    CurrentY := 5;
+    SetColor(COLOR_GREEN);
+    for i := 0 to WrappedLines.Count - 1 do
     begin
       if CurrentY > 20 then
         Break;
       GotoXY(5, CurrentY);
-      Write(Lines[i]);
+      Write(WrappedLines[i]);
       Inc(CurrentY);
     end;
     ResetColor;
     Flush(Output);
   finally
     Lines.Free;
+    WrappedLines.Free;
   end;
   
   { Display prompt on line 22 }
