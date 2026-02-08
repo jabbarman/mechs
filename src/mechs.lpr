@@ -68,14 +68,33 @@ begin
           
           { Simple answer checking - case insensitive trim }
           if Trim(LowerCase(Answer)) = Trim(LowerCase(Chapter.Sections[SectionIndex].Text)) then
+          begin
             Inc(CorrectAnswers);
             
-          { Check for reinforcement }
-          if (SectionIndex + 1 < Length(Chapter.Sections)) and 
-             (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
+            { Check for reinforcement - show if answer was correct }
+            if (SectionIndex + 1 < Length(Chapter.Sections)) and 
+               (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
+            begin
+              Inc(SectionIndex);
+              DisplayReinforcement(Chapter.Sections[SectionIndex].Text);
+              CurrentY := 5;
+              ClearScreen;
+              SplitScreen2;
+              DisplayHeader(Chapter.Metadata.Title);
+            end;
+          end
+          else
           begin
-            Inc(SectionIndex);
-            DisplayReinforcement(Chapter.Sections[SectionIndex].Text);
+            { Answer was incorrect - show generic feedback }
+            DisplayReinforcement('Not quite right. The correct answer was: ' + 
+                                Chapter.Sections[SectionIndex].Text + 
+                                #10#10'Let''s continue...');
+            
+            { Skip the reinforcement section if it exists (it's for correct answers) }
+            if (SectionIndex + 1 < Length(Chapter.Sections)) and 
+               (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
+              Inc(SectionIndex);
+              
             CurrentY := 5;
             ClearScreen;
             SplitScreen2;
