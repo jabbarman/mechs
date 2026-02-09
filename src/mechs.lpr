@@ -51,8 +51,9 @@ begin
           CurrentY := 5;
         end;
         
-        DisplayText(Section.Text, CurrentY);
-        CurrentY := CurrentY + CountDisplayLines(Section.Text) + 2;  { +2 adds blank line after text }
+        { Display text with blank line appended at the end }
+        DisplayText(Section.Text + #10, CurrentY);  { #10 is newline, adds blank line at end }
+        CurrentY := CurrentY + CountDisplayLines(Section.Text + #10) + 1;
       end;
       
       ctQuestion:
