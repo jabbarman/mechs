@@ -52,7 +52,7 @@ begin
         end;
         
         DisplayText(Section.Text, CurrentY);
-        CurrentY := CurrentY + CountDisplayLines(Section.Text) + 1;
+        CurrentY := CurrentY + CountDisplayLines(Section.Text) + 2;  { +2 adds blank line after text }
       end;
       
       ctQuestion:
