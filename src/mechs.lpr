@@ -57,6 +57,16 @@ begin
       
       ctQuestion:
       begin
+        { Always start questions on a new page if not already at the top }
+        if CurrentY > 5 then
+        begin
+          DisplayContinuePrompt;
+          ClearScreen;
+          SplitScreen2;
+          DisplayHeader(Chapter.Metadata.Title);
+          CurrentY := 5;
+        end;
+        
         { Display question text }
         DisplayText(Section.Text, CurrentY);
         Inc(QuestionsAsked);
