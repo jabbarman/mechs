@@ -170,8 +170,7 @@ begin
         Delete(Line, 1, j);
         Line := TrimLeft(Line); { Remove leading spaces from remainder }
       end;
-      if Length(Line) > 0 then
-        WrappedLines.Add(Line);
+      WrappedLines.Add(Line); { Include empty lines for paragraph spacing }
     end;
     
     CurrentY := StartY;
