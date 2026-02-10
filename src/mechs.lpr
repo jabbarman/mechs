@@ -15,22 +15,30 @@ var
   Answer: string;
   QuestionsAsked, CorrectAnswers: integer;
   StartTime: TDateTime;
+  SessionScores: TSessionScoreArray;
+  PageNumber: integer;
 
-procedure ProcessChapter(const Chapter: TChapter);
+procedure ProcessChapter(const Chapter: TChapter; ChapterIndex: integer);
 var
   SectionIndex: integer;
   Section: TChapterSection;
   CurrentY: TYCoord;
   i: integer;
+  AnswerLetter: string;
 begin
   ClearScreen;
   SplitScreen2;
   DisplayHeader(Chapter.Metadata.Title);
   
   CurrentY := 5;
+  PageNumber := 1;
   QuestionsAsked := 0;
   CorrectAnswers := 0;
   StartTime := Now;
+  
+  { Display page number }
+  GotoXY(65, 3);
+  Write('Page ', PageNumber);
   
   SectionIndex := 0;
   while SectionIndex < Length(Chapter.Sections) do
@@ -49,10 +57,13 @@ begin
           SplitScreen2;
           DisplayHeader(Chapter.Metadata.Title);
           CurrentY := 5;
+          Inc(PageNumber);
+          GotoXY(65, 3);
+          Write('Page ', PageNumber);
         end;
         
         { Display text with blank line appended at the end }
-        DisplayText(Section.Text + #10, CurrentY);  { #10 is newline, adds blank line at end }
+        DisplayText(Section.Text + #10, CurrentY);
         CurrentY := CurrentY + CountDisplayLines(Section.Text + #10) + 1;
       end;
       
@@ -66,6 +77,9 @@ begin
           SplitScreen2;
           DisplayHeader(Chapter.Metadata.Title);
           CurrentY := 5;
+          Inc(PageNumber);
+          GotoXY(65, 3);
+          Write('Page ', PageNumber);
         end;
         
         { Display question text }
@@ -96,13 +110,20 @@ begin
           { Move to answer section to compare (but don't display it) }
           Inc(SectionIndex);
           
+          { Extract display letter for feedback }
+          if Length(Trim(Answer)) > 0 then
+            AnswerLetter := UpCase(Trim(Answer)[1])
+          else
+            AnswerLetter := '?';
+          
           { Answer checking - case insensitive trim }
           if Trim(LowerCase(Answer)) = Trim(LowerCase(Chapter.Sections[SectionIndex].Text)) then
           begin
             Inc(CorrectAnswers);
             
-            { Correct - brief congratulation, skip reinforcement }
-            DisplayReinforcement('Excellent!');
+            { Correct - use original wording }
+            DisplayReinforcement('Yes, ' + AnswerLetter + 
+                                ' is the correct answer.');
             
             { Skip the reinforcement section if it exists }
             if (SectionIndex + 1 < Length(Chapter.Sections)) and 
@@ -113,26 +134,37 @@ begin
             ClearScreen;
             SplitScreen2;
             DisplayHeader(Chapter.Metadata.Title);
+            Inc(PageNumber);
+            GotoXY(65, 3);
+            Write('Page ', PageNumber);
           end
           else
           begin
-            { Incorrect - show correct answer and reinforcement text }
+            { Incorrect - beep and show correct answer with reinforcement }
+            Write(#7); { Terminal bell }
+            Flush(Output);
+            
             if (SectionIndex + 1 < Length(Chapter.Sections)) and 
                (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
             begin
               Inc(SectionIndex);
-              DisplayReinforcement('Not quite right. The correct answer was: ' + 
-                                  Chapter.Sections[SectionIndex - 1].Text + 
+              DisplayReinforcement(AnswerLetter + 
+                                  ' is incorrect, the answer is ' + 
+                                  Chapter.Sections[SectionIndex - 1].Text + '.' +
                                   #10#10#10 + Chapter.Sections[SectionIndex].Text);
             end
             else
-              DisplayReinforcement('Not quite right. The correct answer was: ' + 
-                                  Chapter.Sections[SectionIndex].Text);
+              DisplayReinforcement(AnswerLetter + 
+                                  ' is incorrect, the answer is ' + 
+                                  Chapter.Sections[SectionIndex].Text + '.');
               
             CurrentY := 5;
             ClearScreen;
             SplitScreen2;
             DisplayHeader(Chapter.Metadata.Title);
+            Inc(PageNumber);
+            GotoXY(65, 3);
+            Write('Page ', PageNumber);
           end;
         end;
       end;
@@ -151,6 +183,11 @@ begin
                    SecondsBetween(Now, StartTime));
   SetDiagnostic(DiagnosticsData, CurrentDiagnostic);
   SaveDiagnostics(DiagnosticsData);
+  
+  { Update session scores }
+  SessionScores[ChapterIndex].QuestionsAsked := QuestionsAsked;
+  SessionScores[ChapterIndex].CorrectAnswers := CorrectAnswers;
+  SessionScores[ChapterIndex].Attempted := True;
   
   { Show completion message }
   ClearScreen;
@@ -171,17 +208,50 @@ end;
 procedure ShowIntroduction;
 begin
   ClearScreen;
-  SplitScreen1;
-  DisplayHeader('Welcome to mechs CAL System');
+  SplitScreen2;
+  DisplayHeader('Introduction');
   
-  GotoXY(10, 7);
-  Write('Computer-Assisted Learning for Mechanics');
-  GotoXY(10, 9);
-  Write('This program helps you learn fundamental physics concepts');
-  GotoXY(10, 10);
-  Write('through interactive chapters and questions.');
-  GotoXY(10, 12);
-  Write('Select a chapter from the menu to begin.');
+  DisplayText('This program will attempt to teach you some mechanics. ' +
+              'Mechanics is a branch of physics which is concerned with ' +
+              'the relation of matter to energy.' + #10 +
+              #10 +
+              'You will be presented with chapters, any of which you may ' +
+              'attempt. Each chapter has some pages of text which explain ' +
+              'the subject matter.' + #10 +
+              #10 +
+              'After you have read a chapter you will be asked to try and ' +
+              'answer some questions on that chapter. Reinforcement text ' +
+              'will be supplied if required.' + #10 +
+              #10 +
+              'At the end of your session, a breakdown of marks for each ' +
+              'chapter attempted will be displayed, together with an ' +
+              'overall percentage mark.' + #10 +
+              #10 +
+              'You may choose to attempt as many or as few chapters as ' +
+              'you wish in any one session.', 5);
+  
+  DisplayContinuePrompt;
+  
+  ClearScreen;
+  SplitScreen2;
+  DisplayHeader('Using This Program');
+  
+  DisplayText('When a chapter is selected from the menu, the text for ' +
+              'that chapter will be displayed a page at a time. When you ' +
+              'have read each page, you will be prompted to continue.' + #10 +
+              #10 +
+              'After the text has been presented, you will be asked a ' +
+              'number of multiple-choice questions on the chapter. You ' +
+              'should answer each question by typing the letter ' +
+              'corresponding to your chosen answer.' + #10 +
+              #10 +
+              'If your answer is correct, you will be told so and the ' +
+              'program will continue to the next question. If your answer ' +
+              'is incorrect, you will be shown the correct answer and ' +
+              'given some reinforcement text explaining it.' + #10 +
+              #10 +
+              'You may return to the menu and choose another chapter at ' +
+              'any time, or you may choose to end the session.', 5);
   
   DisplayContinuePrompt;
 end;
@@ -206,7 +276,24 @@ begin
       Exit;
     end;
     
-    ShowIntroduction;
+    { Initialize session scores }
+    SetLength(SessionScores, Length(Chapters));
+    for Choice := 0 to Length(Chapters) - 1 do
+    begin
+      SessionScores[Choice].ChapterTitle := Chapters[Choice].Metadata.Title;
+      SessionScores[Choice].QuestionsAsked := 0;
+      SessionScores[Choice].CorrectAnswers := 0;
+      SessionScores[Choice].Attempted := False;
+    end;
+    
+    { Optional introduction }
+    ClearScreen;
+    SplitScreen2;
+    DisplayHeader('mechs - Computer-Assisted Learning');
+    GotoXY(10, 10);
+    Write('Welcome to the Mechanics CAL System');
+    if GetYesNo('Would you like to read the introduction?') then
+      ShowIntroduction;
     
     { Main loop }
     Running := True;
@@ -220,9 +307,12 @@ begin
       else
       begin
         CurrentChapter := Chapters[Choice - 1];
-        ProcessChapter(CurrentChapter);
+        ProcessChapter(CurrentChapter, Choice - 1);
       end;
     end;
+    
+    { End-of-session analysis }
+    DisplaySessionAnalysis(SessionScores);
     
     { Cleanup }
     ClearScreen;

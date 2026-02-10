@@ -51,9 +51,18 @@ type
     LastAccessed: TDateTime;
   end;
   
+  { Session score for a single chapter attempt }
+  TSessionScore = record
+    ChapterTitle: string;
+    QuestionsAsked: integer;
+    CorrectAnswers: integer;
+    Attempted: boolean;
+  end;
+  
   { List types using dynamic arrays }
   TChapterArray = array of TChapter;
   TDiagnosticArray = array of TDiagnosticData;
+  TSessionScoreArray = array of TSessionScore;
 
 implementation
 

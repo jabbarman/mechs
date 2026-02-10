@@ -11,6 +11,7 @@ procedure SplitScreen1;
 procedure SplitScreen2;
 procedure DisplayHeader(const Title: string);
 procedure DisplayMenu(const Chapters: TChapterArray);
+procedure DisplaySessionAnalysis(const Scores: TSessionScoreArray);
 procedure DisplayContinuePrompt;
 function GetMenuChoice(MaxChoice: integer): integer;
 function GetYesNo(const Prompt: string): boolean;
@@ -52,7 +53,7 @@ var
 begin
   ClearScreen;
   SplitScreen1;
-  DisplayHeader('Computer-Assisted Learning - Mechanics');
+  DisplayHeader('Master Screen');
   
   YPos := 6;
   for i := 0 to Length(Chapters) - 1 do
@@ -70,7 +71,7 @@ begin
   SetColor(COLOR_RED);
   Write(IntToStr(Length(Chapters) + 1), '. ');
   ResetColor;
-  Write('Exit');
+  Write('End this session.');
 end;
 
 procedure DisplayContinuePrompt;
@@ -323,6 +324,48 @@ begin
     Write(StringOfChar(' ', 80));
   end;
   Flush(Output);
+end;
+
+procedure DisplaySessionAnalysis(const Scores: TSessionScoreArray);
+var
+  i: integer;
+  YPos: integer;
+  TotalQuestions, TotalCorrect: integer;
+begin
+  ClearScreen;
+  SplitScreen2;
+  DisplayHeader('Session Analysis');
+  
+  TotalQuestions := 0;
+  TotalCorrect := 0;
+  YPos := 6;
+  
+  for i := 0 to Length(Scores) - 1 do
+  begin
+    GotoXY(10, YPos);
+    if Scores[i].Attempted then
+    begin
+      Write('Chapter ', i + 1, ': ', Scores[i].CorrectAnswers, '/',
+            Scores[i].QuestionsAsked);
+      TotalQuestions := TotalQuestions + Scores[i].QuestionsAsked;
+      TotalCorrect := TotalCorrect + Scores[i].CorrectAnswers;
+    end
+    else
+      Write('Chapter ', i + 1, ' was not attempted.');
+    Inc(YPos);
+  end;
+  
+  Inc(YPos);
+  GotoXY(10, YPos);
+  SetColor(COLOR_CYAN);
+  if TotalQuestions > 0 then
+    Write('Your overall mark is ', (TotalCorrect * 100) div TotalQuestions, '%')
+  else
+    Write('No questions were attempted.');
+  ResetColor;
+  Flush(Output);
+  
+  DisplayContinuePrompt;
 end;
 
 end.
