@@ -297,7 +297,7 @@ begin
         WrappedLines.Add(Line);
     end;
     
-    CurrentY := 6;
+    CurrentY := 5;
     SetColor(COLOR_GREEN);
     for i := 0 to WrappedLines.Count - 1 do
     begin

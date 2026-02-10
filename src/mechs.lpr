@@ -123,7 +123,7 @@ begin
               Inc(SectionIndex);
               DisplayReinforcement('Not quite right. The correct answer was: ' + 
                                   Chapter.Sections[SectionIndex - 1].Text + 
-                                  #10#10 + Chapter.Sections[SectionIndex].Text);
+                                  #10#10#10 + Chapter.Sections[SectionIndex].Text);
             end
             else
               DisplayReinforcement('Not quite right. The correct answer was: ' + 
