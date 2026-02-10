@@ -101,30 +101,33 @@ begin
           begin
             Inc(CorrectAnswers);
             
-            { Check for reinforcement - show if answer was correct }
+            { Correct - brief congratulation, skip reinforcement }
+            DisplayReinforcement('Excellent!');
+            
+            { Skip the reinforcement section if it exists }
+            if (SectionIndex + 1 < Length(Chapter.Sections)) and 
+               (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
+              Inc(SectionIndex);
+              
+            CurrentY := 5;
+            ClearScreen;
+            SplitScreen2;
+            DisplayHeader(Chapter.Metadata.Title);
+          end
+          else
+          begin
+            { Incorrect - show correct answer and reinforcement text }
             if (SectionIndex + 1 < Length(Chapter.Sections)) and 
                (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
             begin
               Inc(SectionIndex);
-              { Add "Excellent!" prefix to reinforcement for correct answers }
-              DisplayReinforcement('Excellent!'#10#10 + Chapter.Sections[SectionIndex].Text);
-              CurrentY := 5;
-              ClearScreen;
-              SplitScreen2;
-              DisplayHeader(Chapter.Metadata.Title);
-            end;
-          end
-          else
-          begin
-            { Answer was incorrect - show generic feedback }
-            DisplayReinforcement('Not quite right. The correct answer was: ' + 
-                                Chapter.Sections[SectionIndex].Text + 
-                                #10#10'Let''s continue...');
-            
-            { Skip the reinforcement section if it exists (it's for correct answers) }
-            if (SectionIndex + 1 < Length(Chapter.Sections)) and 
-               (Chapter.Sections[SectionIndex + 1].ContentType = ctReinforcement) then
-              Inc(SectionIndex);
+              DisplayReinforcement('Not quite right. The correct answer was: ' + 
+                                  Chapter.Sections[SectionIndex - 1].Text + 
+                                  #10#10 + Chapter.Sections[SectionIndex].Text);
+            end
+            else
+              DisplayReinforcement('Not quite right. The correct answer was: ' + 
+                                  Chapter.Sections[SectionIndex].Text);
               
             CurrentY := 5;
             ClearScreen;
