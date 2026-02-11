@@ -1,6 +1,29 @@
 # mechs - Computer-Assisted Learning System
 
-A modern, terminal-based educational software for interactive learning. Originally created in 1987 for teaching O-level mechanics, now rebuilt with modular architecture and extensible content system.
+`mechs` is both a preservation project and a working modern educational program.
+
+The original system was written over 40 years ago in Pascal, developed on a VT100 terminal connected to a mini computer. That original machine, operating system, and compiler environment no longer exist in practical use, making the program effectively impossible to run today without emulating the full historical stack.
+
+This repository is the evolution of that original work. Using AI-assisted interpretation of the preserved historical source, the program has been sympathetically modernized into a maintainable Free Pascal codebase that keeps the terminal-first learning style and educational intent intact.
+
+In short: this is not just a mention of an old program—it is a continuation of it.
+
+## What this repository contains
+
+- A **modern, runnable terminal application** for interactive mechanics learning
+- A **preserved copy of the historical source** in `original/`
+- A **modular Free Pascal implementation** in `src/`
+- A **JSON-based chapter/content system** in `data/chapters/`
+
+## What the modern version does
+
+The modern `mechs` program provides:
+
+- Guided, chapter-based instructional flow
+- Question-and-answer interaction with immediate reinforcement
+- Basic progress and diagnostic tracking
+- ANSI terminal UI for a clean text-first experience
+- Extensible content via JSON chapter files
 
 ## Features
 
@@ -17,6 +40,12 @@ A modern, terminal-based educational software for interactive learning. Original
 ```bash
 make
 ./mechs
+```
+
+Or use:
+
+```bash
+make run
 ```
 
 ### Requirements
@@ -130,7 +159,9 @@ The codebase is organized into units for easy extension:
 
 ## History
 
-This project began as a Computer-Assisted Learning program written in 1987 by S J Jabbar to teach O-level mechanics. The original code (preserved in `original/`) has been completely rebuilt with modern Pascal features while maintaining the educational philosophy and terminal-based approach.
+This project began as a Computer-Assisted Learning program written in 1987 by S J Jabbar to teach O-level mechanics. It was developed for a VT100 + mini-computer environment that is now effectively inaccessible.
+
+The original source is preserved in `original/`. The modern implementation in this repository is an AI-assisted reinterpretation and rebuild that aims to preserve the character and pedagogy of the original while making it practical to build, run, extend, and maintain on contemporary systems.
 
 ## License
 
